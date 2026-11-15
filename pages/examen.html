@@ -4,178 +4,574 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Examen blanc - Neuro'Rider</title>
+<meta name="theme-color" content="#14283f">
+<title>Examens blancs - Neuro’Rider</title>
 <link rel="stylesheet" href="../css/style.css">
+
 <style>
-.exam-answer {
-  display:block;
-  width:100%;
-  padding:15px;
-  margin:10px 0;
-  border:2px solid #2375a8;
-  border-radius:12px;
-  background:white;
-  color:#14283f;
-  text-align:left;
-  font-size:16px;
+:root {
+  --navy:#14283f;
+  --blue:#2375a8;
+  --orange:#f2a23a;
+  --light:#f3f6fa;
+  --green:#23865b;
+  --red:#c64b4b;
 }
-.exam-answer:disabled { opacity:.75; }
-.exam-answer:focus { outline:3px solid #f2a23a; }
-#feedback { font-weight:bold; }
-#next { display:none; }
+* { box-sizing:border-box; }
+body { background:var(--light); color:var(--navy); }
+.exam-wrap { max-width:850px; margin:25px auto; padding:16px; }
+.exam-hero {
+  background:var(--navy); color:white; padding:25px;
+  border-radius:20px; margin-bottom:20px;
+}
+.exam-hero h1 { margin:8px 0; }
+.eyebrow { color:var(--orange); font-weight:bold; letter-spacing:1px; }
+.panel {
+  background:white; padding:22px; border-radius:18px;
+  box-shadow:0 5px 20px #14283f12; margin-bottom:18px;
+}
+.mode-grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px; margin-top:18px;
+}
+.mode-card {
+  text-align:left; padding:18px; border:2px solid #e1e7ee;
+  background:white; border-radius:15px; color:var(--navy);
+  cursor:pointer; min-height:130px;
+}
+.mode-card:hover,.mode-card:focus { border-color:var(--orange); }
+.mode-card strong { display:block; margin:8px 0; font-size:16px; }
+.mode-card span { font-size:13px; color:#64748b; }
+.big-icon { font-size:28px; }
+.button {
+  display:inline-block; border:0; border-radius:12px;
+  background:var(--orange); color:var(--navy);
+  padding:13px 20px; font-size:16px; font-weight:bold;
+  cursor:pointer; text-decoration:none;
+}
+.button.secondary { background:#e8eef5; }
+.button:disabled { opacity:.5; cursor:not-allowed; }
+.topline { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.progress-track {
+  height:10px; background:#e5eaf0; border-radius:20px;
+  overflow:hidden; margin:12px 0 20px;
+}
+.progress-fill {
+  height:100%; width:0; background:var(--blue);
+  transition:width .2s;
+}
+.question-visual {
+  display:flex; align-items:center; justify-content:center;
+  min-height:145px; background:#edf4fa; border-radius:15px;
+  margin:15px 0; font-size:65px;
+}
+.theme-tag {
+  display:inline-block; background:#eaf2f8; color:var(--blue);
+  border-radius:20px; padding:6px 12px; font-size:12px;
+  font-weight:bold;
+}
+.exam-answer {
+  display:flex; align-items:center; gap:12px;
+  width:100%; text-align:left; padding:14px;
+  margin:10px 0; border:2px solid #dce4ed;
+  border-radius:12px; background:white; color:var(--navy);
+  font-size:15px; cursor:pointer;
+}
+.exam-answer:hover:not(:disabled) { border-color:var(--blue); }
+.answer-letter {
+  flex:0 0 30px; height:30px; display:grid;
+  place-items:center; border-radius:50%;
+  background:#eaf0f6; font-weight:bold;
+}
+.exam-answer.correct { border-color:var(--green); background:#eaf7f0; }
+.exam-answer.wrong { border-color:var(--red); background:#fff0f0; }
+.exam-answer:disabled { cursor:default; opacity:1; }
+#feedback {
+  padding:14px; border-radius:12px; margin-top:15px;
+  background:#f0f4f8; line-height:1.5;
+}
+#feedback.good { background:#eaf7f0; }
+#feedback.bad { background:#fff0f0; }
+.hidden { display:none !important; }
+.stat-grid {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:10px; margin:18px 0;
+}
+.stat {
+  padding:15px; background:#f0f4f8; border-radius:12px;
+}
+.stat strong { display:block; font-size:25px; }
+.history-item {
+  padding:13px 0; border-bottom:1px solid #e5eaf0;
+  display:flex; justify-content:space-between; gap:10px;
+}
+.small { color:#64748b; font-size:13px; }
+#questionTitle { line-height:1.4; }
+@media(max-width:520px) {
+  .mode-grid { grid-template-columns:1fr; }
+  .exam-wrap { padding:10px; }
+  .panel { padding:16px; }
+  .exam-hero { padding:20px; }
+}
 </style>
 </head>
+
 <body>
+
 <header class="header">
-<a class="logo" href="../index.html">🏍️ Neuro’Rider</a>
-<nav>
-<a href="../index.html">Accueil</a>
-<a href="espace.html">Mon espace</a>
-<a href="entrainement.html">Entraînement</a>
-</nav>
+  <a class="logo" href="../index.html">🏍️ Neuro’Rider</a>
+  <nav>
+    <a href="../index.html">Accueil</a>
+    <a href="cours.html">Cours</a>
+    <a href="entrainement.html">Entraînement</a>
+    <a href="profil.html">Profil</a>
+  </nav>
 </header>
 
-<main class="page">
-<p class="eyebrow">EXAMEN BLANC · ETM A2</p>
-<h1>À toi de relever le défi ! 🏁</h1>
-<p>40 questions pour tester tes connaissances. Lis chaque question attentivement.</p>
+<main class="exam-wrap">
 
-<section class="panel">
-<p id="progress">Question 1 sur 40</p>
-<div style="background:#ddd;border-radius:20px;height:10px">
-<div id="bar" style="height:10px;width:0%;background:#2375a8;border-radius:20px"></div>
-</div>
-<h2 id="question"></h2>
-<div id="answers"></div>
-<p id="feedback" aria-live="polite"></p>
-<button id="next" class="button" onclick="nextQuestion()">Question suivante</button>
-<div id="result"></div>
+<section class="exam-hero">
+  <p class="eyebrow">PRÉPARATION ETM · A2</p>
+  <h1>Mes examens blancs 🏁</h1>
+  <p>Entraîne-toi, découvre tes erreurs et progresse à chaque tentative.</p>
 </section>
 
-<a class="small-link" href="espace.html">← Retour à mon espace</a>
+<!-- ACCUEIL DES EXAMENS -->
+<section id="home" class="panel">
+  <h2>Choisis ton entraînement</h2>
+  <p>Les questions sont mélangées à chaque nouvelle tentative.</p>
+
+  <div class="mode-grid">
+    <button class="mode-card" onclick="startExam('exam')">
+      <span class="big-icon">🏁</span>
+      <strong>Examen blanc</strong>
+      <span>40 questions tirées au hasard dans la banque.</span>
+    </button>
+
+    <button class="mode-card" onclick="startExam('short')">
+      <span class="big-icon">⚡</span>
+      <strong>Session rapide</strong>
+      <span>10 questions pour réviser en quelques minutes.</span>
+    </button>
+
+    <button class="mode-card" onclick="startExam('theme')">
+      <span class="big-icon">📚</span>
+      <strong>Réviser un thème</strong>
+      <span>Choisis une catégorie et concentre-toi dessus.</span>
+    </button>
+
+    <button class="mode-card" onclick="startExam('errors')">
+      <span class="big-icon">🧠</span>
+      <strong>Revoir mes erreurs</strong>
+      <span>Retrouve les questions auxquelles tu as mal répondu.</span>
+    </button>
+  </div>
+
+  <div id="themeChoice" class="hidden" style="margin-top:20px">
+    <label for="themeSelect"><strong>Choisis ton thème :</strong></label>
+    <select id="themeSelect" style="width:100%;padding:13px;margin-top:8px;border-radius:10px">
+      <option value="Signalisation">Signalisation</option>
+      <option value="Circulation">Circulation</option>
+      <option value="Équipement">Équipement</option>
+      <option value="Mécanique">Mécanique</option>
+      <option value="Sécurité">Sécurité</option>
+    </select>
+    <button class="button" style="margin-top:12px" onclick="launchTheme()">Commencer</button>
+  </div>
+</section>
+
+<!-- QUESTIONNAIRE -->
+<section id="quiz" class="panel hidden">
+  <div class="topline">
+    <span id="progress">Question 1</span>
+    <span id="scoreLive">0 bonne réponse</span>
+  </div>
+
+  <div class="progress-track">
+    <div id="bar" class="progress-fill"></div>
+  </div>
+
+  <span id="themeTag" class="theme-tag"></span>
+
+  <div class="question-visual" id="visual" aria-hidden="true">🏍️</div>
+
+  <h2 id="questionTitle"></h2>
+  <p class="small">Choisis la meilleure réponse.</p>
+
+  <div id="answers"></div>
+  <div id="feedback" class="hidden" aria-live="polite"></div>
+
+  <button id="next" class="button hidden" onclick="nextQuestion()">
+    Question suivante
+  </button>
+</section>
+
+<!-- RÉSULTAT -->
+<section id="result" class="panel hidden">
+  <p class="eyebrow">BILAN DE TA SESSION</p>
+  <h2 id="resultTitle">Examen terminé !</h2>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <span class="small">Bonnes réponses</span>
+      <strong id="finalScore">0/40</strong>
+    </div>
+    <div class="stat">
+      <span class="small">Réussite</span>
+      <strong id="percentage">0%</strong>
+    </div>
+  </div>
+
+  <p id="resultMessage"></p>
+  <div id="themeResults"></div>
+
+  <button class="button" onclick="startExam('exam')">
+    Nouvel examen aléatoire
+  </button>
+  <button class="button secondary" onclick="showHome()">
+    Retour aux examens
+  </button>
+</section>
+
+<!-- HISTORIQUE -->
+<section class="panel">
+  <h2>📊 Mes dernières tentatives</h2>
+  <div id="history"></div>
+  <p class="small">Les résultats sont enregistrés sur cet appareil.</p>
+</section>
+
+<a href="espace.html" class="small">← Retour à mon espace</a>
+
 </main>
 
 <footer>Neuro’Rider · Chaque question te fait progresser.</footer>
 
 <script>
-const questions = [
-["Un panneau triangulaire à bord rouge annonce généralement :",["Un danger","Une obligation","Une indication"],0],
-["Un panneau rond à fond bleu indique généralement :",["Une interdiction","Une obligation","Un danger"],1],
-["Un feu rouge impose :",["De ralentir seulement","De s'arrêter","De klaxonner"],1],
-["Avant de changer de voie, il faut :",["Contrôler et signaler son intention","Accélérer sans regarder","Regarder uniquement devant"],0],
-["La distance de sécurité générale correspond au minimum à :",["Une seconde","Deux secondes","Dix secondes"],1],
-["Sur une chaussée mouillée, il faut :",["Augmenter les distances","Freiner brusquement","Suivre de plus près"],0],
-["Un casque doit être :",["Homologué et correctement attaché","Simplement posé sur la tête","Choisi uniquement pour sa couleur"],0],
-["Les gants moto certifiés sont-ils obligatoires ?",["Oui","Non","Seulement la nuit"],0],
-["Un pneu sous-gonflé peut :",["Diminuer la stabilité","Améliorer toujours l'adhérence","Supprimer les distances de freinage"],0],
-["Avant un trajet, il est utile de contrôler :",["Les pneus et les feux","Uniquement la couleur de la moto","La radio"],0],
-["Un angle mort est :",["Une zone non visible dans les rétroviseurs","Une zone de stationnement","Une voie réservée"],0],
-["À l'approche d'un virage, il est préférable de :",["Adapter sa vitesse avant le virage","Freiner brutalement au milieu","Regarder uniquement sa roue avant"],0],
-["Des gravillons sur la chaussée peuvent :",["Réduire l'adhérence","Améliorer le freinage","Augmenter la visibilité"],0],
-["Un clignotant signifie :",["Une intention de changer de direction","Une priorité automatique","Un arrêt obligatoire"],0],
-["Pour être mieux vu, il est utile de :",["Porter des équipements visibles","Rouler dans l'angle mort","Éteindre les feux"],0],
-["Un feu orange fixe signifie généralement :",["S'arrêter sauf si l'arrêt ne peut être fait en sécurité","Accélérer systématiquement","Faire demi-tour"],0],
-["En cas de fatigue, le bon réflexe est :",["Faire une pause","Augmenter la vitesse","Boire uniquement un café et continuer sans arrêt"],0],
-["La pression des pneus se vérifie :",["Selon les préconisations du constructeur","À l'œil uniquement","Seulement après une crevaison"],0],
-["La chaîne d'une moto doit être :",["Entretenue et contrôlée selon le constructeur","Toujours détendue","Lubrifiée avec n'importe quel produit"],0],
-["Le feu stop sert à :",["Signaler un freinage","Indiquer un changement de voie","Éclairer la route"],0],
-["Avant de dépasser, il faut notamment :",["Vérifier visibilité, espace et signalisation","Se placer sans contrôle","Klaxonner puis dépasser"],0],
-["Une ligne continue au sol indique généralement :",["Qu'il est interdit de la franchir ou de la chevaucher, sauf exceptions prévues","Une voie de dépassement libre","Une zone de stationnement"],0],
-["À proximité d'un passage piéton, il faut :",["Ralentir et être prêt à s'arrêter","Accélérer","Regarder uniquement les véhicules"],0],
-["Un véhicule lourd peut avoir :",["Des angles morts importants","Une visibilité parfaite tout autour","Aucun risque de manœuvre"],0],
-["En cas de pluie, les premières minutes peuvent être :",["Particulièrement glissantes","Toujours plus adhérentes","Sans différence"],0],
-["Le regard du motard doit généralement porter :",["Là où il souhaite aller, en anticipant","Uniquement sur le compteur","Sur la roue arrière"],0],
-["Un passager à moto doit :",["Porter un casque attaché et des gants certifiés","Se tenir debout","Ne pas porter de chaussures"],0],
-["Pour freiner efficacement, il faut :",["Utiliser les commandes progressivement et adapter le freinage","Bloquer volontairement les roues","Couper son éclairage"],0],
-["Une plaque métallique humide peut être :",["Glissante","Plus adhérente qu'un revêtement sec","Sans aucun effet"],0],
-["Avant de démarrer, il faut :",["Vérifier son environnement et sa visibilité","Regarder uniquement le tableau de bord","Démarrer sans contrôle"],0],
-["Le liquide de frein doit être :",["Surveillé selon les indications du constructeur","Remplacé par de l'eau","Ignoré"],0],
-["Un panneau de sens interdit indique :",["Un accès interdit dans ce sens","Une obligation de tourner à droite","Une route prioritaire"],0],
-["Une chaussée déformée nécessite :",["Une allure adaptée et de l'anticipation","Une accélération brusque","Un freinage brutal sur l'obstacle"],0],
-["La nuit, pour mieux voir et être vu, il faut :",["Utiliser un éclairage en bon état et adapter son allure","Rouler sans feu","Regarder uniquement les phares des autres"],0],
-["Un vêtement moto résistant à l'abrasion sert à :",["Limiter les blessures en cas de glissade","Augmenter la vitesse","Remplacer le casque"],0],
-["Si un véhicule devant freine, il faut :",["Anticiper et garder une marge de sécurité","Le dépasser immédiatement","Se rapprocher"],0],
-["Une intersection demande :",["Observation et anticipation","Une accélération systématique","Aucun contrôle si la route semble vide"],0],
-["Un pneu dont les sculptures sont trop usées :",["Doit être remplacé conformément aux limites réglementaires","Est toujours plus sûr","N'a pas besoin d'être contrôlé"],0],
-["En circulation, il faut adapter sa vitesse :",["Aux conditions, à la visibilité et à la route","Uniquement à la puissance de la moto","Toujours à la vitesse maximale autorisée"],0],
-["La meilleure attitude face à un danger est :",["Anticiper et agir sans geste brusque","Paniquer et regarder l'obstacle","Accélérer systématiquement"],0]
+/*
+  Banque pédagogique originale.
+  Les questions ne constituent pas une banque officielle ETM.
+  Les règles et références doivent être vérifiées avec les supports officiels.
+*/
+
+const bank = [
+["Signalisation","🚧","Un panneau triangulaire à bord rouge annonce généralement :", "Un danger","Une obligation","Une indication","Une interdiction","Un panneau de danger."],
+["Signalisation","🔵","Un panneau rond à fond bleu indique généralement :", "Une obligation","Une interdiction","Un danger","Une indication","Les panneaux ronds bleus indiquent généralement une obligation."],
+["Signalisation","🚦","Un feu rouge impose :", "De s'arrêter","De ralentir seulement","D'accélérer","De klaxonner","Le feu rouge impose l'arrêt."],
+["Circulation","↔️","Avant de changer de voie, il faut :", "Contrôler et signaler son intention","Accélérer sans regarder","Regarder uniquement devant","Se fier uniquement aux rétroviseurs","Contrôle visuel, angle mort et signalisation sont essentiels."],
+["Sécurité","⏱️","La distance de sécurité générale correspond au minimum à :", "Deux secondes","Une seconde","Dix secondes","Une demi-seconde","La règle générale est de conserver au moins deux secondes."],
+["Sécurité","🌧️","Sur une chaussée mouillée, il faut :", "Augmenter les distances de sécurité","Freiner brusquement","Suivre de plus près","Accélérer dans les virages","L'adhérence peut diminuer sur chaussée mouillée."],
+["Équipement","🪖","Un casque moto doit être :", "Homologué et correctement attaché","Simplement posé sur la tête","Choisi uniquement pour sa couleur","Porté sans jugulaire attachée","Un casque adapté et correctement attaché est indispensable."],
+["Équipement","🧤","Les gants moto certifiés sont-ils obligatoires pour le conducteur et le passager ?", "Oui","Non","Seulement la nuit","Seulement sur autoroute","Les gants certifiés sont obligatoires en France."],
+["Mécanique","🛞","Un pneu sous-gonflé peut :", "Diminuer la stabilité et modifier le comportement","Améliorer toujours l'adhérence","Supprimer les distances de freinage","Réduire systématiquement la consommation","La pression incorrecte affecte tenue de route et sécurité."],
+["Mécanique","🔧","Avant un trajet, il est utile de contrôler :", "Les pneus et les feux","Uniquement la couleur de la moto","La radio","Le niveau du réservoir uniquement","Les contrôles de base incluent pneus, éclairage et commandes."],
+["Circulation","👀","Un angle mort est :", "Une zone non visible dans les rétroviseurs","Une zone de stationnement","Une voie réservée","Une zone interdite aux motos","Il faut effectuer un contrôle visuel adapté."],
+["Sécurité","↩️","À l'approche d'un virage, il est préférable de :", "Adapter sa vitesse avant le virage","Freiner brutalement au milieu","Regarder uniquement sa roue avant","Accélérer sans visibilité","Anticiper le virage et adapter son allure avant d'y entrer."],
+["Sécurité","🪨","Des gravillons sur la chaussée peuvent :", "Réduire l'adhérence","Améliorer le freinage","Augmenter la visibilité","Raccourcir le freinage","Les gravillons peuvent provoquer une perte d'adhérence."],
+["Circulation","💡","Un clignotant signifie :", "Une intention de changer de direction","Une priorité automatique","Un arrêt obligatoire","Une autorisation de dépasser","Le clignotant informe les autres, sans donner de priorité."],
+["Équipement","🦺","Pour être mieux vu, il est utile de :", "Porter des équipements visibles","Rouler dans l'angle mort","Éteindre les feux","Se placer derrière un véhicule","La visibilité contribue à être détecté plus tôt."],
+["Signalisation","🟠","Un feu orange fixe signifie généralement :", "S'arrêter sauf si l'arrêt ne peut être fait en sécurité","Accélérer systématiquement","Faire demi-tour","Klaxonner","L'arrêt est requis sauf impossibilité de s'arrêter en sécurité."],
+["Sécurité","😴","En cas de fatigue, le bon réflexe est :", "Faire une pause","Augmenter la vitesse","Continuer sans arrêt","Rouler plus près des autres","La fatigue réduit vigilance et temps de réaction."],
+["Mécanique","🛞","La pression des pneus se vérifie :", "Selon les préconisations du constructeur","À l'œil uniquement","Seulement après une crevaison","Uniquement quand le pneu est chaud","Respecter les pressions préconisées et les conditions de mesure."],
+["Mécanique","⛓️","La chaîne d'une moto doit être :", "Entretenue et contrôlée selon le constructeur","Toujours détendue","Lubrifiée avec n'importe quel produit","Jamais nettoyée","Tension, lubrification et entretien suivent les consignes constructeur."],
+["Mécanique","🛑","Le feu stop sert à :", "Signaler un freinage","Indiquer un changement de voie","Éclairer la route","Signaler une priorité","Il avertit les usagers qui suivent d'un freinage."],
+["Circulation","🚗","Avant de dépasser, il faut notamment :", "Vérifier visibilité, espace et signalisation","Se placer sans contrôle","Klaxonner puis dépasser","Dépasser dans tous les virages","Le dépassement exige visibilité et espace suffisants, et doit être autorisé."],
+["Signalisation","〰️","Une ligne continue au sol indique généralement :", "Qu'il est interdit de la franchir ou de la chevaucher, sauf exceptions prévues","Une voie de dépassement libre","Une zone de stationnement","Une voie réservée aux motos","La ligne continue interdit normalement son franchissement ou chevauchement, sous réserve des exceptions réglementaires."],
+["Circulation","🚶","À proximité d'un passage piéton, il faut :", "Ralentir et être prêt à s'arrêter","Accélérer","Regarder uniquement les véhicules","Dépasser les véhicules arrêtés","Il faut anticiper la présence et la traversée des piétons."],
+["Circulation","🚛","Un véhicule lourd peut avoir :", "Des angles morts importants","Une visibilité parfaite tout autour","Aucun risque de manœuvre","Une distance de freinage toujours nulle","Les angles morts des poids lourds peuvent être importants."],
+["Sécurité","🌧️","En cas de pluie, les premières minutes peuvent être :", "Particulièrement glissantes","Toujours plus adhérentes","Sans différence","Plus sûres qu'une chaussée sèche","Les dépôts et résidus rendent parfois le début de pluie glissant."],
+["Sécurité","👁️","Le regard du motard doit généralement porter :", "Là où il souhaite aller, en anticipant","Uniquement sur le compteur","Sur la roue arrière","Sur l'obstacle à éviter sans regarder ailleurs","Le regard aide à anticiper et guider la trajectoire."],
+["Équipement","🧤","Un passager à moto doit notamment :", "Porter un casque attaché et des gants certifiés","Se tenir debout","Ne pas porter de chaussures","S'asseoir de côté en toutes circonstances","Le passager doit disposer d'un équipement réglementaire et adapté."],
+["Sécurité","🛑","Pour freiner efficacement, il faut :", "Utiliser les commandes progressivement et adapter le freinage","Bloquer volontairement les roues","Couper son éclairage","Regarder uniquement le sol","Un freinage progressif et adapté aide à garder le contrôle."],
+["Sécurité","🛣️","Une plaque métallique humide peut être :", "Glissante","Plus adhérente qu'un revêtement sec","Sans aucun effet","Un endroit idéal pour freiner","Les surfaces métalliques humides peuvent être très glissantes."],
+["Sécurité","🏍️","Avant de démarrer, il faut :", "Vérifier son environnement et sa visibilité","Regarder uniquement le tableau de bord","Démarrer sans contrôle","Se placer immédiatement au milieu de la voie","Observer l'environnement avant de s'insérer."],
+["Mécanique","🧪","Le liquide de frein doit être :", "Surveillé selon les indications du constructeur","Remplacé par de l'eau","Ignoré","Mélangé à de l'huile moteur","Le circuit de freinage doit être entretenu conformément au manuel."],
+["Signalisation","⛔","Un panneau de sens interdit indique :", "Un accès interdit dans ce sens","Une obligation de tourner à droite","Une route prioritaire","Une limitation de vitesse","Il interdit l'accès dans le sens indiqué."],
+["Sécurité","🕳️","Une chaussée déformée nécessite :", "Une allure adaptée et de l'anticipation","Une accélération brusque","Un freinage brutal sur l'obstacle","De lâcher le guidon","Il faut adapter sa vitesse et garder le contrôle."],
+["Équipement","🌙","La nuit, pour mieux voir et être vu, il faut :", "Utiliser un éclairage en bon état et adapter son allure","Rouler sans feu","Regarder uniquement les phares des autres","Porter des lunettes teintées sombres","Un éclairage fonctionnel et une allure adaptée sont essentiels."],
+["Équipement","🧥","Un vêtement moto résistant à l'abrasion sert à :", "Limiter les blessures en cas de glissade","Augmenter la vitesse","Remplacer le casque","Améliorer le freinage","Les vêtements adaptés protègent notamment contre l'abrasion."],
+["Circulation","🚘","Si un véhicule devant freine, il faut :", "Anticiper et garder une marge de sécurité","Le dépasser immédiatement","Se rapprocher","Regarder uniquement le rétroviseur","Une distance suffisante laisse le temps de réagir."],
+["Circulation","🚦","Une intersection demande :", "Observation et anticipation","Une accélération systématique","Aucun contrôle si la route semble vide","De suivre le véhicule devant sans regarder","Observer les usagers et la signalisation est indispensable."],
+["Mécanique","🛞","Un pneu dont les sculptures sont trop usées :", "Doit être remplacé conformément aux limites réglementaires","Est toujours plus sûr","N'a pas besoin d'être contrôlé","Améliore l'évacuation de l'eau","L'usure excessive compromet l'adhérence et peut être illégale."],
+["Sécurité","⚠️","En circulation, il faut adapter sa vitesse :", "Aux conditions, à la visibilité et à la route","Uniquement à la puissance de la moto","Toujours à la vitesse maximale autorisée","À la vitesse du véhicule derrière","La vitesse doit rester adaptée aux circonstances."],
+["Sécurité","🧠","La meilleure attitude face à un danger est :", "Anticiper et agir sans geste brusque","Paniquer et regarder l'obstacle","Accélérer systématiquement","Fermer les yeux brièvement","L'anticipation et la maîtrise des gestes sont essentielles."],
+
+["Signalisation","🛑","Un panneau STOP impose :", "Un arrêt complet à la limite prévue","Un simple ralentissement","Un arrêt uniquement si un véhicule arrive","Un cédez-le-passage facultatif","Le STOP impose un arrêt complet, même si la route semble libre."],
+["Signalisation","🔻","Un panneau de cédez-le-passage signifie :", "Laisser passer les usagers prioritaires","S'arrêter obligatoirement dans tous les cas","Accélérer pour passer avant les autres","Que l'on est prioritaire","Il faut céder le passage et s'arrêter si nécessaire."],
+["Signalisation","🚸","Un panneau triangulaire représentant des enfants annonce :", "Un danger lié à la présence possible d'enfants","Une zone réservée aux motos","Une obligation de stationner","Une interdiction de circuler","Il avertit d'un risque de présence d'enfants."],
+["Circulation","↪️","Avant de tourner à droite, le motard doit :", "Contrôler, signaler et se placer correctement","Tourner sans ralentir","Regarder uniquement le trottoir","Se fier au véhicule qui précède","Il faut contrôler l'environnement et signaler son intention."],
+["Circulation","🚌","Lorsqu'un bus quitte son arrêt en agglomération, il faut :", "Faciliter son insertion lorsque les règles l'imposent","Accélérer pour le bloquer","Le dépasser par la droite systématiquement","Ignorer son clignotant","Il faut faciliter le départ des transports en commun selon les règles applicables."],
+["Sécurité","🌬️","En cas de vent latéral fort, il faut :", "Adapter son allure et anticiper les rafales","Rouler plus vite","Se rapprocher d'un poids lourd","Lâcher le guidon","Le vent peut déporter la moto, notamment aux endroits exposés."],
+["Sécurité","🌫️","Lorsque la visibilité diminue fortement, il faut :", "Réduire l'allure et augmenter les distances","Conserver la même vitesse","Suivre de très près les feux devant","Éteindre les feux","La vitesse doit permettre de s'arrêter dans la zone visible."],
+["Équipement","👢","Des chaussures moto adaptées doivent notamment :", "Protéger les pieds et les chevilles","Être ouvertes","Être choisies uniquement pour leur légèreté","Remplacer les gants","Des chaussures montantes adaptées protègent mieux les pieds et chevilles."],
+["Équipement","🪖","Après un choc important, un casque doit :", "Être remplacé par précaution","Être repeint uniquement","Être conservé s'il est propre","Être réparé avec de la colle","Un casque ayant subi un choc peut avoir perdu ses capacités de protection."],
+["Mécanique","🔋","Une batterie faible peut provoquer :", "Des difficultés de démarrage","Une meilleure puissance de freinage","Une meilleure adhérence","Une baisse de pression des pneus","La batterie alimente le démarrage et les équipements électriques."],
+["Mécanique","💡","Un feu de croisement défectueux doit :", "Être réparé avant de reprendre une circulation normale","Être ignoré de jour","Être remplacé par le klaxon","Être masqué","L'éclairage doit être en état de fonctionnement."],
+["Circulation","🚲","En dépassant un cycliste, il faut :", "Laisser un espace latéral suffisant","Passer au plus près","Klaxonner à chaque fois","Le pousser vers le bas-côté","Il faut respecter les distances latérales réglementaires."],
+["Circulation","🚑","À l'approche d'un véhicule prioritaire en intervention, il faut :", "Faciliter son passage sans créer de danger","Le suivre pour gagner du temps","S'arrêter au milieu d'un carrefour","Accélérer devant lui","Il faut dégager le passage en sécurité."],
+["Sécurité","🛣️","Sur une chaussée gravillonnée, il est préférable de :", "Éviter les gestes brusques et réduire l'allure","Freiner fortement sur l'avant","Incliner fortement la moto","Accélérer brutalement","Une conduite souple limite les pertes d'adhérence."],
+["Sécurité","🧍","Un passager modifie le comportement de la moto. Il faut :", "Adapter sa conduite et ses distances","Freiner plus tard","Prendre les virages plus vite","Ignorer le poids supplémentaire","La masse et l'équilibre changent avec un passager."],
+["Équipement","🦺","Un gilet de haute visibilité doit être :", "Accessible selon les obligations applicables","Porté uniquement en été","Utilisé comme protection dorsale","Attaché au guidon en roulant","Le motard doit respecter les obligations de détention et d'utilisation prévues."],
+["Mécanique","🛠️","Une fuite de liquide près d'une roue doit :", "Être identifiée et réparée avant de rouler si elle compromet la sécurité","Être nettoyée puis ignorée","Être couverte avec un tissu","Être considérée comme normale","Une fuite peut signaler un problème mécanique ou de freinage."],
+["Circulation","🚗","Un véhicule masque une partie de la visibilité à une intersection. Il faut :", "Avancer prudemment seulement si cela peut se faire sans danger","S'engager rapidement","Klaxonner et passer","Suivre le véhicule sans observation","Ne jamais s'engager sans visibilité suffisante."],
+["Sécurité","🧊","En présence de verglas possible, il faut :", "Éviter les mouvements brusques et redoubler de prudence","Freiner brutalement","Accélérer dans les virages","Pencher davantage la moto","Le verglas réduit fortement l'adhérence."],
+["Signalisation","🚧","Un panneau temporaire de travaux annonce :", "Une zone où la circulation peut être modifiée ou dangereuse","Une priorité permanente","Une route réservée aux motos","Une fin d'interdiction","Il faut suivre la signalisation temporaire et adapter son allure."]
 ];
 
+// Conversion de la banque en objets.
+const questions = bank.map((q, i) => ({
+  id:i + 1,
+  theme:q[0],
+  visual:q[1],
+  text:q[2],
+  options:[q[3],q[4],q[5],q[6]],
+  correct:0,
+  explanation:q[7]
+}));
+
+let session = [];
 let current = 0;
 let score = 0;
 let answered = false;
+let sessionMode = "exam";
+let mistakes = [];
+
+const $ = id => document.getElementById(id);
+
+function shuffle(array) {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function showOnly(id) {
+  ["home","quiz","result"].forEach(name => $(name).classList.add("hidden"));
+  $(id).classList.remove("hidden");
+}
+
+function showHome() {
+  showOnly("home");
+  $("themeChoice").classList.add("hidden");
+  renderHistory();
+}
+
+function startExam(mode) {
+  if (mode === "theme") {
+    $("themeChoice").classList.remove("hidden");
+    $("themeChoice").scrollIntoView({behavior:"smooth"});
+    return;
+  }
+
+  sessionMode = mode;
+  let pool = [...questions];
+
+  if (mode === "errors") {
+    const ids = JSON.parse(localStorage.getItem("neuroRiderErrors") || "[]");
+    pool = pool.filter(q => ids.includes(q.id));
+    if (!pool.length) {
+      alert("Aucune erreur enregistrée pour le moment. Fais un examen pour commencer !");
+      return;
+    }
+  }
+
+  const amount = mode === "short" ? Math.min(10,pool.length) :
+                 mode === "errors" ? Math.min(40,pool.length) : 40;
+
+  prepareSession(pool, amount);
+}
+
+function launchTheme() {
+  const selected = $("themeSelect").value;
+  sessionMode = "theme";
+  const pool = questions.filter(q => q.theme === selected);
+  prepareSession(pool, pool.length);
+}
+
+function prepareSession(pool, amount) {
+  session = shuffle(pool).slice(0,amount).map(q => {
+    const choices = shuffle(q.options.map((label,index) => ({
+      label,
+      correct:index === q.correct
+    })));
+    return {...q, choices};
+  });
+
+  current = 0;
+  score = 0;
+  mistakes = [];
+  $("themeChoice").classList.add("hidden");
+  showOnly("quiz");
+  showQuestion();
+}
 
 function showQuestion() {
-answered = false;
-const q = questions[current];
-document.getElementById("progress").textContent =
-"Question " + (current + 1) + " sur " + questions.length;
-document.getElementById("bar").style.width =
-(current / questions.length * 100) + "%";
-document.getElementById("question").textContent = q[0];
-document.getElementById("feedback").textContent = "";
-document.getElementById("next").style.display = "none";
-document.getElementById("result").textContent = "";
+  answered = false;
+  const q = session[current];
 
-const area = document.getElementById("answers");
-area.innerHTML = "";
+  $("progress").textContent =
+    "Question " + (current + 1) + " sur " + session.length;
+  $("scoreLive").textContent = score + " bonne(s) réponse(s)";
+  $("bar").style.width = (current / session.length * 100) + "%";
+  $("themeTag").textContent = q.theme;
+  $("visual").textContent = q.visual;
+  $("questionTitle").textContent = q.text;
+  $("feedback").className = "hidden";
+  $("feedback").textContent = "";
+  $("next").classList.add("hidden");
 
-q[1].forEach((answer, index) => {
-const button = document.createElement("button");
-button.className = "exam-answer";
-button.textContent = String.fromCharCode(65 + index) + " — " + answer;
-button.onclick = () => checkAnswer(index);
-area.appendChild(button);
-});
+  const area = $("answers");
+  area.innerHTML = "";
+
+  q.choices.forEach((choice,index) => {
+    const button = document.createElement("button");
+    button.className = "exam-answer";
+
+    const letter = document.createElement("span");
+    letter.className = "answer-letter";
+    letter.textContent = String.fromCharCode(65 + index);
+
+    const label = document.createElement("span");
+    label.textContent = choice.label;
+
+    button.append(letter,label);
+    button.onclick = () => checkAnswer(index);
+    area.appendChild(button);
+  });
 }
 
 function checkAnswer(index) {
-if (answered) return;
-answered = true;
-const q = questions[current];
-const buttons = document.querySelectorAll(".exam-answer");
-buttons.forEach(button => button.disabled = true);
+  if (answered) return;
+  answered = true;
 
-if (index === q[2]) {
-score++;
-document.getElementById("feedback").textContent = "✅ Bonne réponse !";
-} else {
-document.getElementById("feedback").textContent =
-"💡 La bonne réponse était : " + q[1][q[2]];
+  const q = session[current];
+  const buttons = [...document.querySelectorAll(".exam-answer")];
+  const selected = q.choices[index];
+  const good = selected.correct;
+
+  buttons.forEach((button,i) => {
+    button.disabled = true;
+    if (q.choices[i].correct) button.classList.add("correct");
+    if (i === index && !good) button.classList.add("wrong");
+  });
+
+  const feedback = $("feedback");
+  feedback.classList.remove("hidden");
+  feedback.classList.add(good ? "good" : "bad");
+
+  if (good) {
+    score++;
+    feedback.innerHTML = "<strong>✅ Bonne réponse !</strong><br>" + q.explanation;
+  } else {
+    mistakes.push(q.id);
+    const correct = q.choices.find(c => c.correct).label;
+    feedback.innerHTML =
+      "<strong>💡 Pas tout à fait.</strong><br>" +
+      "Bonne réponse : <strong>" + escapeHTML(correct) +
+      "</strong><br>" + q.explanation;
+  }
+
+  $("scoreLive").textContent = score + " bonne(s) réponse(s)";
+  $("next").textContent =
+    current === session.length - 1 ? "Voir mon résultat" : "Question suivante";
+  $("next").classList.remove("hidden");
 }
 
-document.getElementById("next").style.display = "inline-block";
-document.getElementById("next").textContent =
-current === questions.length - 1 ? "Voir mon résultat" : "Continuer";
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
 
 function nextQuestion() {
-if (!answered) return;
-current++;
-if (current < questions.length) {
-showQuestion();
-} else {
-document.getElementById("progress").textContent = "Examen terminé";
-document.getElementById("bar").style.width = "100%";
-document.getElementById("question").textContent = "Ton résultat 🏁";
-document.getElementById("answers").innerHTML = "";
-document.getElementById("feedback").textContent = "";
-document.getElementById("next").style.display = "none";
-document.getElementById("result").innerHTML =
-"<h2>" + score + " / 40 bonnes réponses</h2>" +
-"<p>" + (score >= 35 ? "Très bon résultat ! Continue à réviser." :
-"Continue tes entraînements, tu peux progresser !") + "</p>" +
-"<button class='button' onclick='restart()'>Recommencer</button>";
-}
+  if (!answered) return;
+  current++;
+
+  if (current < session.length) {
+    showQuestion();
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else {
+    finishExam();
+  }
 }
 
-function restart() {
-current = 0;
-score = 0;
-showQuestion();
+function finishExam() {
+  $("bar").style.width = "100%";
+  showOnly("result");
+
+  const percent = Math.round(score / session.length * 100);
+  $("finalScore").textContent = score + "/" + session.length;
+  $("percentage").textContent = percent + "%";
+
+  $("resultMessage").textContent =
+    percent >= 85 ? "Excellent travail ! Continue à entretenir tes connaissances." :
+    percent >= 70 ? "Bon travail ! Quelques révisions te permettront de progresser." :
+    "Ne te décourage pas. Revois les explications et recommence à ton rythme.";
+
+  $("resultTitle").textContent =
+    sessionMode === "exam" ? "Examen blanc terminé 🏁" : "Session terminée 🎯";
+
+  // Enregistrement de l'historique local.
+  const history = JSON.parse(localStorage.getItem("neuroRiderHistory") || "[]");
+  history.unshift({
+    date:new Date().toLocaleDateString("fr-FR"),
+    score,
+    total:session.length,
+    percent,
+    mode:sessionMode
+  });
+  localStorage.setItem("neuroRiderHistory",JSON.stringify(history.slice(0,30)));
+
+  // Mémorisation des erreurs à revoir.
+  const oldErrors = JSON.parse(localStorage.getItem("neuroRiderErrors") || "[]");
+  const updatedErrors = [...new Set([...oldErrors,...mistakes])];
+  localStorage.setItem("neuroRiderErrors",JSON.stringify(updatedErrors));
+
+  // Retire de la liste les erreurs corrigées pendant une session.
+  if (mistakes.length === 0 && sessionMode === "errors") {
+    localStorage.setItem("neuroRiderErrors","[]");
+  }
+
+  renderThemeResults();
+  renderHistory();
 }
 
-showQuestion();
+function renderThemeResults() {
+  const counts = {};
+  session.forEach(q => {
+    if (!counts[q.theme]) counts[q.theme] = {total:0,good:0};
+    counts[q.theme].total++;
+  });
+
+  // Les réponses justes sont retrouvées grâce aux boutons marqués.
+  // Le détail par thème sera enrichi avec le suivi de réponses dans une prochaine version.
+  $("themeResults").innerHTML =
+    "<h3>📚 Thèmes abordés</h3>" +
+    Object.entries(counts).map(([name,data]) =>
+      "<p><strong>" + escapeHTML(name) + "</strong> · " +
+      data.total + " question(s)</p>"
+    ).join("");
+}
+
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem("neuroRiderHistory") || "[]");
+  const area = $("history");
+
+  if (!history.length) {
+    area.innerHTML = "<p class='small'>Tes résultats apparaîtront ici après ton premier examen.</p>";
+    return;
+  }
+
+  area.innerHTML = history.slice(0,5).map(item =>
+    "<div class='history-item'><span>" +
+    escapeHTML(item.date) + " · " + escapeHTML(item.mode) +
+    "</span><strong>" + item.score + "/" + item.total +
+    " (" + item.percent + "%)</strong></div>"
+  ).join("");
+}
+
+renderHistory();
 </script>
 </body>
 </html>
