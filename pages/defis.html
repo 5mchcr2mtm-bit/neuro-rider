@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mes défis - Neuro'Rider</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.challenge {
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  margin:15px 0;
+  box-shadow:0 4px 15px rgba(20,40,63,.06);
+}
+.challenge button {
+  border:0;
+  cursor:pointer;
+}
+.done {
+  border:2px solid #299b68;
+}
+.status {
+  font-weight:bold;
+  color:#2375a8;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<a class="logo" href="../index.html">🏍️ Neuro’Rider</a>
+<nav>
+<a href="../index.html">Accueil</a>
+<a href="espace.html">Mon espace</a>
+<a href="cours.html">Cours</a>
+<a href="profil.html">Profil</a>
+</nav>
+</header>
+
+<main class="page">
+
+<p class="eyebrow">TON PARCOURS MOTARD</p>
+<h1>Mes défis ⭐</h1>
+
+<p>Chaque petit pas compte. Pas besoin de tout réussir en une journée !</p>
+
+<section class="panel">
+<h2>🏆 Mon tableau de progression</h2>
+<p id="counter">0 défi réussi sur 4</p>
+<div style="background:#ddd;border-radius:20px;height:12px">
+<div id="progress" style="height:12px;width:0%;background:#299b68;border-radius:20px"></div>
+</div>
+<p id="message">À toi de jouer !</p>
+</section>
+
+<div class="challenge" id="challenge0">
+<h2>🚦 Défi 1 : Signalisation</h2>
+<p>Révise les panneaux de danger pendant 5 minutes.</p>
+<button class="button" onclick="complete(0)">J'ai réussi !</button>
+<p class="status" id="status0"></p>
+</div>
+
+<div class="challenge" id="challenge1">
+<h2>🛣️ Défi 2 : Circulation</h2>
+<p>Apprends trois règles de sécurité en circulation.</p>
+<button class="button" onclick="complete(1)">J'ai réussi !</button>
+<p class="status" id="status1"></p>
+</div>
+
+<div class="challenge" id="challenge2">
+<h2>🪖 Défi 3 : Équipement</h2>
+<p>Retrouve les équipements obligatoires du motard.</p>
+<button class="button" onclick="complete(2)">J'ai réussi !</button>
+<p class="status" id="status2"></p>
+</div>
+
+<div class="challenge" id="challenge3">
+<h2>🎯 Défi 4 : Entraînement</h2>
+<p>Réponds à cinq questions dans ton espace entraînement.</p>
+<button class="button" onclick="complete(3)">J'ai réussi !</button>
+<p class="status" id="status3"></p>
+</div>
+
+<section class="panel">
+<h2>💬 Ton encouragement du jour</h2>
+<p id="encouragement">Tu n'as pas besoin d'aller vite. Tu as juste besoin de continuer !</p>
+<button class="button" onclick="newMessage()">Un autre encouragement</button>
+</section>
+
+<a class="small-link" href="espace.html">← Retour à mon espace</a>
+
+</main>
+
+<footer>Neuro’Rider · Chaque progrès compte !</footer>
+
+<script>
+const messages = [
+"Tu progresses à ton rythme. Continue ! 🏍️",
+"Une erreur est une occasion d'apprendre.",
+"Quelques minutes de révision peuvent faire la différence.",
+"Tu es capable d'avancer étape par étape !",
+"Respire, concentre-toi et fais de ton mieux."
+];
+
+let completed = JSON.parse(
+localStorage.getItem("neuroDefis") || "[false,false,false,false]"
+);
+
+function refresh() {
+let total = completed.filter(Boolean).length;
+
+document.getElementById("counter").textContent =
+total + " défi(s) réussi(s) sur 4";
+
+document.getElementById("progress").style.width =
+(total / 4 * 100) + "%";
+
+document.getElementById("message").textContent =
+total === 4 ? "🏆 Tous les défis sont réussis ! Bravo !" :
+total === 0 ? "À toi de jouer !" :
+"Bravo ! Continue tes efforts !";
+
+completed.forEach((done,index) => {
+document.getElementById("status"+index).textContent =
+done ? "✅ Défi réussi !" : "À réaliser";
+document.getElementById("challenge"+index)
+.classList.toggle("done",done);
+});
+}
+
+function complete(index) {
+completed[index] = !completed[index];
+localStorage.setItem("neuroDefis",JSON.stringify(completed));
+refresh();
+}
+
+function newMessage() {
+const index = Math.floor(Math.random()*messages.length);
+document.getElementById("encouragement").textContent =
+messages[index];
+}
+
+refresh();
+</script>
+
+</body>
+</html>
