@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examen blanc - Neuro'Rider</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.exam-answer {
+  display:block;
+  width:100%;
+  padding:15px;
+  margin:10px 0;
+  border:2px solid #2375a8;
+  border-radius:12px;
+  background:white;
+  color:#14283f;
+  text-align:left;
+  font-size:16px;
+}
+.exam-answer:disabled { opacity:.75; }
+.exam-answer:focus { outline:3px solid #f2a23a; }
+#feedback { font-weight:bold; }
+#next { display:none; }
+</style>
+</head>
+<body>
+<header class="header">
+<a class="logo" href="../index.html">🏍️ Neuro’Rider</a>
+<nav>
+<a href="../index.html">Accueil</a>
+<a href="espace.html">Mon espace</a>
+<a href="entrainement.html">Entraînement</a>
+</nav>
+</header>
+
+<main class="page">
+<p class="eyebrow">EXAMEN BLANC · ETM A2</p>
+<h1>À toi de relever le défi ! 🏁</h1>
+<p>40 questions pour tester tes connaissances. Lis chaque question attentivement.</p>
+
+<section class="panel">
+<p id="progress">Question 1 sur 40</p>
+<div style="background:#ddd;border-radius:20px;height:10px">
+<div id="bar" style="height:10px;width:0%;background:#2375a8;border-radius:20px"></div>
+</div>
+<h2 id="question"></h2>
+<div id="answers"></div>
+<p id="feedback" aria-live="polite"></p>
+<button id="next" class="button" onclick="nextQuestion()">Question suivante</button>
+<div id="result"></div>
+</section>
+
+<a class="small-link" href="espace.html">← Retour à mon espace</a>
+</main>
+
+<footer>Neuro’Rider · Chaque question te fait progresser.</footer>
+
+<script>
+const questions = [
+["Un panneau triangulaire à bord rouge annonce généralement :",["Un danger","Une obligation","Une indication"],0],
+["Un panneau rond à fond bleu indique généralement :",["Une interdiction","Une obligation","Un danger"],1],
+["Un feu rouge impose :",["De ralentir seulement","De s'arrêter","De klaxonner"],1],
+["Avant de changer de voie, il faut :",["Contrôler et signaler son intention","Accélérer sans regarder","Regarder uniquement devant"],0],
+["La distance de sécurité générale correspond au minimum à :",["Une seconde","Deux secondes","Dix secondes"],1],
+["Sur une chaussée mouillée, il faut :",["Augmenter les distances","Freiner brusquement","Suivre de plus près"],0],
+["Un casque doit être :",["Homologué et correctement attaché","Simplement posé sur la tête","Choisi uniquement pour sa couleur"],0],
+["Les gants moto certifiés sont-ils obligatoires ?",["Oui","Non","Seulement la nuit"],0],
+["Un pneu sous-gonflé peut :",["Diminuer la stabilité","Améliorer toujours l'adhérence","Supprimer les distances de freinage"],0],
+["Avant un trajet, il est utile de contrôler :",["Les pneus et les feux","Uniquement la couleur de la moto","La radio"],0],
+["Un angle mort est :",["Une zone non visible dans les rétroviseurs","Une zone de stationnement","Une voie réservée"],0],
+["À l'approche d'un virage, il est préférable de :",["Adapter sa vitesse avant le virage","Freiner brutalement au milieu","Regarder uniquement sa roue avant"],0],
+["Des gravillons sur la chaussée peuvent :",["Réduire l'adhérence","Améliorer le freinage","Augmenter la visibilité"],0],
+["Un clignotant signifie :",["Une intention de changer de direction","Une priorité automatique","Un arrêt obligatoire"],0],
+["Pour être mieux vu, il est utile de :",["Porter des équipements visibles","Rouler dans l'angle mort","Éteindre les feux"],0],
+["Un feu orange fixe signifie généralement :",["S'arrêter sauf si l'arrêt ne peut être fait en sécurité","Accélérer systématiquement","Faire demi-tour"],0],
+["En cas de fatigue, le bon réflexe est :",["Faire une pause","Augmenter la vitesse","Boire uniquement un café et continuer sans arrêt"],0],
+["La pression des pneus se vérifie :",["Selon les préconisations du constructeur","À l'œil uniquement","Seulement après une crevaison"],0],
+["La chaîne d'une moto doit être :",["Entretenue et contrôlée selon le constructeur","Toujours détendue","Lubrifiée avec n'importe quel produit"],0],
+["Le feu stop sert à :",["Signaler un freinage","Indiquer un changement de voie","Éclairer la route"],0],
+["Avant de dépasser, il faut notamment :",["Vérifier visibilité, espace et signalisation","Se placer sans contrôle","Klaxonner puis dépasser"],0],
+["Une ligne continue au sol indique généralement :",["Qu'il est interdit de la franchir ou de la chevaucher, sauf exceptions prévues","Une voie de dépassement libre","Une zone de stationnement"],0],
+["À proximité d'un passage piéton, il faut :",["Ralentir et être prêt à s'arrêter","Accélérer","Regarder uniquement les véhicules"],0],
+["Un véhicule lourd peut avoir :",["Des angles morts importants","Une visibilité parfaite tout autour","Aucun risque de manœuvre"],0],
+["En cas de pluie, les premières minutes peuvent être :",["Particulièrement glissantes","Toujours plus adhérentes","Sans différence"],0],
+["Le regard du motard doit généralement porter :",["Là où il souhaite aller, en anticipant","Uniquement sur le compteur","Sur la roue arrière"],0],
+["Un passager à moto doit :",["Porter un casque attaché et des gants certifiés","Se tenir debout","Ne pas porter de chaussures"],0],
+["Pour freiner efficacement, il faut :",["Utiliser les commandes progressivement et adapter le freinage","Bloquer volontairement les roues","Couper son éclairage"],0],
+["Une plaque métallique humide peut être :",["Glissante","Plus adhérente qu'un revêtement sec","Sans aucun effet"],0],
+["Avant de démarrer, il faut :",["Vérifier son environnement et sa visibilité","Regarder uniquement le tableau de bord","Démarrer sans contrôle"],0],
+["Le liquide de frein doit être :",["Surveillé selon les indications du constructeur","Remplacé par de l'eau","Ignoré"],0],
+["Un panneau de sens interdit indique :",["Un accès interdit dans ce sens","Une obligation de tourner à droite","Une route prioritaire"],0],
+["Une chaussée déformée nécessite :",["Une allure adaptée et de l'anticipation","Une accélération brusque","Un freinage brutal sur l'obstacle"],0],
+["La nuit, pour mieux voir et être vu, il faut :",["Utiliser un éclairage en bon état et adapter son allure","Rouler sans feu","Regarder uniquement les phares des autres"],0],
+["Un vêtement moto résistant à l'abrasion sert à :",["Limiter les blessures en cas de glissade","Augmenter la vitesse","Remplacer le casque"],0],
+["Si un véhicule devant freine, il faut :",["Anticiper et garder une marge de sécurité","Le dépasser immédiatement","Se rapprocher"],0],
+["Une intersection demande :",["Observation et anticipation","Une accélération systématique","Aucun contrôle si la route semble vide"],0],
+["Un pneu dont les sculptures sont trop usées :",["Doit être remplacé conformément aux limites réglementaires","Est toujours plus sûr","N'a pas besoin d'être contrôlé"],0],
+["En circulation, il faut adapter sa vitesse :",["Aux conditions, à la visibilité et à la route","Uniquement à la puissance de la moto","Toujours à la vitesse maximale autorisée"],0],
+["La meilleure attitude face à un danger est :",["Anticiper et agir sans geste brusque","Paniquer et regarder l'obstacle","Accélérer systématiquement"],0]
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function showQuestion() {
+answered = false;
+const q = questions[current];
+document.getElementById("progress").textContent =
+"Question " + (current + 1) + " sur " + questions.length;
+document.getElementById("bar").style.width =
+(current / questions.length * 100) + "%";
+document.getElementById("question").textContent = q[0];
+document.getElementById("feedback").textContent = "";
+document.getElementById("next").style.display = "none";
+document.getElementById("result").textContent = "";
+
+const area = document.getElementById("answers");
+area.innerHTML = "";
+
+q[1].forEach((answer, index) => {
+const button = document.createElement("button");
+button.className = "exam-answer";
+button.textContent = String.fromCharCode(65 + index) + " — " + answer;
+button.onclick = () => checkAnswer(index);
+area.appendChild(button);
+});
+}
+
+function checkAnswer(index) {
+if (answered) return;
+answered = true;
+const q = questions[current];
+const buttons = document.querySelectorAll(".exam-answer");
+buttons.forEach(button => button.disabled = true);
+
+if (index === q[2]) {
+score++;
+document.getElementById("feedback").textContent = "✅ Bonne réponse !";
+} else {
+document.getElementById("feedback").textContent =
+"💡 La bonne réponse était : " + q[1][q[2]];
+}
+
+document.getElementById("next").style.display = "inline-block";
+document.getElementById("next").textContent =
+current === questions.length - 1 ? "Voir mon résultat" : "Continuer";
+}
+
+function nextQuestion() {
+if (!answered) return;
+current++;
+if (current < questions.length) {
+showQuestion();
+} else {
+document.getElementById("progress").textContent = "Examen terminé";
+document.getElementById("bar").style.width = "100%";
+document.getElementById("question").textContent = "Ton résultat 🏁";
+document.getElementById("answers").innerHTML = "";
+document.getElementById("feedback").textContent = "";
+document.getElementById("next").style.display = "none";
+document.getElementById("result").innerHTML =
+"<h2>" + score + " / 40 bonnes réponses</h2>" +
+"<p>" + (score >= 35 ? "Très bon résultat ! Continue à réviser." :
+"Continue tes entraînements, tu peux progresser !") + "</p>" +
+"<button class='button' onclick='restart()'>Recommencer</button>";
+}
+}
+
+function restart() {
+current = 0;
+score = 0;
+showQuestion();
+}
+
+showQuestion();
+</script>
+</body>
+</html>
