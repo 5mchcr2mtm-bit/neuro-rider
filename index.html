@@ -7,47 +7,198 @@
   <meta name="description" content="Neuro'Rider : prépare ton ETM moto A2 à ton rythme.">
   <title>Neuro’Rider – Réussis ton ETM A2</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 12px;
+    }
+
+    .header nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .header nav a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .account-link {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 20px;
+      background: #f5a334;
+      color: #142a40 !important;
+      font-weight: bold;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 35px;
+    }
+
+    .feature-card {
+      display: block;
+      padding: 24px;
+      border-radius: 20px;
+      background: white;
+      color: #142a40;
+      text-decoration: none;
+      box-shadow: 0 5px 20px #142a4010;
+      transition: transform .2s;
+    }
+
+    .feature-card:active {
+      transform: scale(.98);
+    }
+
+    .feature-card h2 {
+      margin-top: 0;
+    }
+
+    .feature-card p {
+      margin-bottom: 0;
+    }
+
+    .feature-arrow {
+      display: block;
+      text-align: right;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .app-navigation {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      padding: 12px 8px;
+      background: #142a40;
+      border-radius: 18px;
+      margin: 25px auto 0;
+      max-width: 600px;
+    }
+
+    .app-navigation a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: white;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 8px 2px;
+    }
+
+    .app-navigation .nav-icon {
+      font-size: 24px;
+    }
+
+    @media (min-width: 650px) {
+      .header {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .header nav {
+        width: auto;
+      }
+
+      .features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
 </head>
+
 <body>
+
   <header class="header">
     <a class="logo" href="index.html">🏍️ Neuro’Rider</a>
-    <nav>
-      <a href="pages/cours.html">Cours</a>
-      <a href="pages/entrainement.html">Entraînement</a>
-      <a href="pages/examen.html">Examen blanc</a>
-      <a href="pages/profil.html">Mon profil</a>
+
+    <nav aria-label="Navigation principale">
+      <a href="pages/cours.html">📚 Cours</a>
+      <a href="pages/entrainement.html">🎯 Pratique</a>
+      <a href="pages/examen.html">🏁 Examen</a>
+      <a href="pages/progression.html">📊 Progression</a>
+      <a href="pages/connexion.html" class="account-link">👤 Connexion</a>
     </nav>
   </header>
 
   <main class="hero">
+
     <p class="eyebrow">TON PERMIS MOTO A2, À TON RYTHME</p>
+
     <h1>Apprends autrement.<br>Roule vers ta réussite.</h1>
+
     <p class="intro">
       Une préparation à l’ETM pensée pour apprendre progressivement,
       mémoriser plus facilement et avancer sans pression.
     </p>
 
     <div class="actions">
-      <a class="button" href="pages/espace.html">Commencer</a>
+      <a class="button" href="pages/connexion.html">Créer mon compte</a>
       <a class="button secondary" href="pages/cours.html">Découvrir les cours</a>
     </div>
 
-    <section class="features">
-      <article>
+    <section class="features" aria-label="Les espaces Neuro’Rider">
+
+      <a class="feature-card" href="pages/cours.html">
         <h2>📚 Apprendre</h2>
-        <p>Des cours organisés par thème.</p>
-      </article>
-      <article>
+        <p>Des cours organisés par thème pour comprendre les règles.</p>
+        <span class="feature-arrow">Découvrir →</span>
+      </a>
+
+      <a class="feature-card" href="pages/entrainement.html">
         <h2>🎯 S'entraîner</h2>
-        <p>Des questions pour progresser.</p>
-      </article>
-      <article>
+        <p>Des questions pour progresser à ton rythme.</p>
+        <span class="feature-arrow">S'entraîner →</span>
+      </a>
+
+      <a class="feature-card" href="pages/fiches.html">
         <h2>🧠 Mémoriser</h2>
-        <p>Des fiches et des défis courts.</p>
-      </article>
+        <p>Des fiches et des défis courts pour retenir l'essentiel.</p>
+        <span class="feature-arrow">Réviser →</span>
+      </a>
+
     </section>
+
+    <section aria-label="Navigation rapide" class="app-navigation">
+      <a href="pages/entrainement.html">
+        <span class="nav-icon">📝</span>
+        <span>Pratique</span>
+      </a>
+
+      <a href="pages/cours.html">
+        <span class="nav-icon">📖</span>
+        <span>Cours</span>
+      </a>
+
+      <a href="pages/progression.html">
+        <span class="nav-icon">📊</span>
+        <span>Stats</span>
+      </a>
+
+      <a href="pages/profil.html">
+        <span class="nav-icon">👤</span>
+        <span>Profil</span>
+      </a>
+    </section>
+
   </main>
 
-  <footer>Neuro’Rider · Apprendre à son rythme, rouler en confiance.</footer>
+  <footer>
+    Neuro’Rider · Apprendre à son rythme, rouler en confiance.
+  </footer>
+
 </body>
 </html>
