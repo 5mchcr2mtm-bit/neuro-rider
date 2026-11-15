@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil - Neuro’Rider</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .profile-container {
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .profile-card {
+      background: white;
+      padding: 22px;
+      margin: 18px 0;
+      border-radius: 16px;
+      box-shadow: 0 3px 12px #00000012;
+    }
+    .profile-card label {
+      display: block;
+      margin: 14px 0 6px;
+      font-weight: bold;
+    }
+    .profile-card input,
+    .profile-card select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 9px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .profile-card button {
+      margin-top: 18px;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .profile-links a {
+      display: block;
+      padding: 12px;
+      margin: 8px 0;
+      background: #f1f4f8;
+      border-radius: 9px;
+      text-decoration: none;
+    }
+    #message {
+      font-weight: bold;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🏍️ Neuro’Rider</h1>
+  <p>Mon espace personnel</p>
+  <nav>
+    <a href="../index.html">Accueil</a>
+    <a href="espace.html">Mon espace</a>
+    <a href="cours.html">Cours</a>
+    <a href="entrainement.html">Entraînement</a>
+  </nav>
+</header>
+
+<main class="profile-container">
+  <h2>👤 Mon profil</h2>
+  <p>Un espace pour apprendre à ton rythme et selon tes besoins.</p>
+
+  <section class="profile-card">
+    <h3>Mes informations</h3>
+
+    <label for="prenom">Mon prénom ou pseudo</label>
+    <input id="prenom" type="text" placeholder="Comment veux-tu être appelé(e) ?">
+
+    <label for="objectif">Mon objectif</label>
+    <select id="objectif">
+      <option value="Découvrir le code moto">Découvrir le code moto</option>
+      <option value="Réviser régulièrement">Réviser régulièrement</option>
+      <option value="Préparer l'examen ETM">Préparer l'examen ETM</option>
+    </select>
+
+    <label for="temps">Mon temps de révision préféré</label>
+    <select id="temps">
+      <option value="5 minutes">5 minutes</option>
+      <option value="10 minutes">10 minutes</option>
+      <option value="15 minutes">15 minutes</option>
+      <option value="20 minutes">20 minutes</option>
+      <option value="30 minutes">30 minutes</option>
+    </select>
+
+    <button type="button" onclick="enregistrerProfil()">
+      Enregistrer mon profil
+    </button>
+    <p id="message" aria-live="polite"></p>
+  </section>
+
+  <section class="profile-card">
+    <h3>🧠 Mes préférences d'apprentissage</h3>
+    <p>Choisis les aides qui te sont utiles.</p>
+
+    <label>
+      <input type="checkbox" id="petitesSessions">
+      Je préfère les petites sessions de révision.
+    </label>
+
+    <label>
+      <input type="checkbox" id="pauses">
+      J'aime faire des pauses régulières.
+    </label>
+
+    <label>
+      <input type="checkbox" id="visuels">
+      Je préfère apprendre avec des images et des schémas.
+    </label>
+
+    <label>
+      <input type="checkbox" id="repetitions">
+      J'ai besoin de revoir plusieurs fois les informations.
+    </label>
+
+    <button type="button" onclick="enregistrerPreferences()">
+      Enregistrer mes préférences
+    </button>
+    <p id="messagePreferences" aria-live="polite"></p>
+  </section>
+
+  <section class="profile-card">
+    <h3>📚 Accès rapide</h3>
+    <div class="profile-links">
+      <a href="cours.html">📖 Mes cours</a>
+      <a href="fiches.html">📝 Mes fiches de révision</a>
+      <a href="entrainement.html">🎯 Mes entraînements</a>
+      <a href="examen.html">🏁 Mon examen blanc</a>
+      <a href="defis.html">⭐ Mes défis</a>
+    </div>
+  </section>
+
+  <section class="profile-card">
+    <h3>💡 Un petit rappel</h3>
+    <p>
+      Tu n'as pas besoin de tout retenir en une seule fois.
+      Avance étape par étape, fais des pauses et félicite-toi
+      pour chaque progrès.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>Neuro’Rider – Apprendre à son rythme 🏍️</p>
+</footer>
+
+<script>
+  function enregistrerProfil() {
+    const profil = {
+      prenom: document.getElementById("prenom").value,
+      objectif: document.getElementById("objectif").value,
+      temps: document.getElementById("temps").value
+    };
+
+    localStorage.setItem("neuroRiderProfil", JSON.stringify(profil));
+    document.getElementById("message").textContent =
+      "✅ Ton profil est enregistré sur cet appareil !";
+  }
+
+  function enregistrerPreferences() {
+    const preferences = {
+      petitesSessions: document.getElementById("petitesSessions").checked,
+      pauses: document.getElementById("pauses").checked,
+      visuels: document.getElementById("visuels").checked,
+      repetitions: document.getElementById("repetitions").checked
+    };
+
+    localStorage.setItem("neuroRiderPreferences", JSON.stringify(preferences));
+    document.getElementById("messagePreferences").textContent =
+      "✅ Tes préférences sont enregistrées !";
+  }
+
+  function chargerProfil() {
+    const profil = JSON.parse(localStorage.getItem("neuroRiderProfil") || "null");
+    const preferences = JSON.parse(localStorage.getItem("neuroRiderPreferences") || "null");
+
+    if (profil) {
+      document.getElementById("prenom").value = profil.prenom || "";
+      document.getElementById("objectif").value = profil.objectif;
+      document.getElementById("temps").value = profil.temps;
+    }
+
+    if (preferences) {
+      document.getElementById("petitesSessions").checked = preferences.petitesSessions;
+      document.getElementById("pauses").checked = preferences.pauses;
+      document.getElementById("visuels").checked = preferences.visuels;
+      document.getElementById("repetitions").checked = preferences.repetitions;
+    }
+  }
+
+  chargerProfil();
+</script>
+
+</body>
+</html>
